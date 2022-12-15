@@ -1,0 +1,460 @@
+---
+title: "JaB: Detecting Influential Nodes in TrumpWorld Network"
+output: html_document
+---
+
+
+```{r setup, include = F}
+set.seed(12)
+
+## Libraries --------------------------------------------------------
+# Needed for calculations
+library(tidyverse)
+library(igraph)
+library(snowboot)
+
+#Neeed to read data 
+library(readxl)
+
+# Needed for plotting
+library(viridis)
+library(ggrepel)
+
+## Functions --------------------------------------------------------
+source("funcs/JaB-functions.R")
+
+
+
+```
+
+
+## Intro 
+
+We replicate the TrumpWorld results presented in *Jackknife-after-Bootstrap: Detecting Influential Actors in a Network*. 
+
+The orignal TrumpWorld data from Buzzfeed News can be found [here](https://www.buzzfeednews.com/article/johntemplon/help-us-map-trumpworld). 
+
+
+#### Make Trump igraph
+
+
+We first upload the data and convert it to an igraph object. 
+
+```{r AsNetwork, message = F}
+## Import data set 
+trump_data <- read_excel("data/TrumpWorldData.xlsx")
+trump_data <- as.data.frame(trump_data)
+
+## Make it an igraph 
+trump_edgelist <- as.matrix(trump_data[ , c(2,4)])
+trump_igraph <- graph_from_edgelist(trump_edgelist, directed = F )
+```
+
+
+#### LSMI Optimal seed-wave combo
+
+Then calculate the LSMI optimal seed-wave combination under degree centrality. We will use the selected parameters for all three centrality statistics later in the report. 
+
+
+
+```{r cv}
+set.seed(12)
+
+### LSMI Cross Validation for optimal s-w combo
+#make network object for snowboot package
+trump_network <- igraph_to_network(trump_igraph)
+
+#get optimal combination
+trump_cv <- lsmi_cv(trump_network, 
+                    n.seeds = 1:20,
+                    n.wave = 5)
+trump_cv$best_combination
+```
+
+
+Note, this cross validation method seems to be very unstable, even with a set seed. This needs to be further explored. Our paper uses 14 seeds and 2 waves, so this is the parameter combination we will use moving forward.  
+
+
+## Do JaB Algorithm 
+
+In this section, we run the JaB algorithm with degree, closeness, and eigenvector centrality using the `JaB` function.
+
+#### Set Parameters 
+
+We first set the initial parameters used with all three statistics. 
+
+```{r initial}
+B=100
+U=100
+num_seed=14
+num_wave=2
+quants = c(0, 0.95)
+mult = FALSE
+print_null_dist = T
+
+```
+
+
+#### Degree Centrality 
+
+```{r jab.degree}
+### Do JaB degree
+startTime <- Sys.time()
+JaB_trump_degree <- JaB(trump_igraph, 
+                          B, U,
+                          num_seed, 
+                          num_wave, 
+                          centrality_stat ="degree", 
+                          quants,
+                          mult,
+                          print_null_dist)
+endTime <- Sys.time()
+
+time_degree = endTime - startTime #~10 minutes
+
+```
+
+#### Closeness Centrality
+
+```{r jab.close}
+### Do JaB closeness
+startTime <- Sys.time()
+JaB_trump_closeness <- JaB(trump_igraph, 
+                          B , U,
+                          num_seed, 
+                          num_wave, 
+                          centrality_stat ="closeness", 
+                          quants,
+                          mult,
+                          print_null_dist)
+endTime <- Sys.time()
+
+time_close = endTime - startTime #~12 minutes
+
+```
+
+#### Eigen Vector Centrality 
+
+```{r jab.eigen}
+### Do JaB eigenvector
+startTime <- Sys.time()
+JaB_trump_eigen <- JaB(trump_igraph, 
+                       B , U,
+                       num_seed, 
+                       num_wave, 
+                       centrality_stat ="eigen", 
+                       quants,
+                       mult,
+                       print_null_dist)
+endTime <- Sys.time()
+
+time_eigen = endTime - startTime #~10 minutes
+
+```
+
+
+## Look at Results 
+
+We now inspect our results and recreate certain figures and tables presented in the paper. 
+
+#### All Nodes
+
+Figure 5 and Table 1: 
+
+```{r all.results}
+## Make a table of all Results 
+all_results <- rbind( cbind(JaB_trump_degree$Results, stat = "degree"),
+                  cbind(JaB_trump_closeness$Results, stat = "close"),
+                  cbind(JaB_trump_eigen$Results, stat = "eigen")) %>%
+    filter(Node_Name != "DONALD J. TRUMP")
+
+
+#plot relationship among all three statistics
+all_results %>%
+  select(Node_Name, Orig_Stat, stat) %>%
+  pivot_wider(names_from = stat, values_from = Orig_Stat)  %>%
+  ggplot(aes(color = (eigen), x = close, y = log(degree))) +
+  geom_point() +
+  theme_minimal() +
+  scale_color_viridis(name = "Eigenvector Centrality") +
+  xlab("Closeness Centrality") +
+  ylab("log(Degree Centrality)") +
+  ggtitle("Centrality Measures for All Nodes")
+
+# correlations 
+all_results %>%
+  select(Node_Name, rank, stat) %>%
+  pivot_wider(names_from = stat, values_from = rank)  %>%
+  select(-Node_Name) %>%
+  cor()
+```
+
+
+#### Union set
+
+Figure 5 and Table 2: 
+
+```{r union}
+## Get nodes in Union and Intersection set
+influence_pivot <- 
+  all_results %>%
+  select(Node_Name, stat, Influential) %>%
+  pivot_wider(names_from = stat, values_from = Influential) %>%
+  mutate(and = degree & close & eigen ) %>%
+  mutate(or = degree | close | eigen)
+
+union_names <- na.omit(influence_pivot$Node_Name[influence_pivot$or])
+intersect_names <- na.omit(influence_pivot$Node_Name[influence_pivot$and])
+
+## union results
+union_results <- 
+  all_results %>%
+  filter(Node_Name %in% union_names) %>%
+  select(Node_Name, stat, Orig_Stat) %>%
+  pivot_wider(names_from = stat, values_from = Orig_Stat) %>%
+  arrange(Node_Name)
+
+cool.names <- union_results$Node_Name[c(1,2,3, 12,  6, 48, 52, 7, 19 )]
+
+
+#plot results
+union_results %>%
+  mutate(name = ifelse(Node_Name %in% cool.names, Node_Name, NA)) %>%
+  ggplot(aes(color = log(degree), x = close, y = eigen)) +
+  geom_point() +
+  theme_minimal() +
+  scale_color_viridis(name = "log(Degree Centrality)") +
+  ylim(c(0.03, 0.08))+
+  geom_label_repel( aes(label = name), 
+                    size = 2, 
+                    box.padding = 1,
+                    min.segment.length	=0, 
+                    color = "black",
+                    force = 10) +
+  xlab("Closeness Centrality") +
+  ylab("Eigenvector Centrality") +
+  ggtitle("Centrality Measures for Influential Nodes")+
+  labs(subtitle = "Union Nodes")
+
+#union results
+union_results  %>%
+  select(-Node_Name) %>%
+  cor()
+
+```
+
+#### Intersection results 
+
+The results from the intersection results are not included in the paper. They are presented here: 
+
+```{r intersect}
+intersect_results <- 
+  all_results %>%
+  filter(Node_Name %in% intersect_names) %>%
+  select(Node_Name, stat, Orig_Stat) %>%
+  pivot_wider(names_from = stat, values_from = Orig_Stat) %>%
+  arrange(Node_Name)
+
+cool.names <- intersect_names[c(1,2,3, 12,  6, 48, 52, 7, 19 )]
+
+
+#plot results
+intersect_results %>%
+  mutate(name = ifelse(Node_Name %in% cool.names, Node_Name, NA)) %>%
+  ggplot(aes(color = log(degree), x = close, y = eigen)) +
+  geom_point() +
+  theme_minimal() +
+  scale_color_viridis(name = "log(Degree Centrality)") +
+  ylim(c(0.03, 0.08))+
+  geom_label_repel( aes(label = name), 
+                    size = 2, 
+                    box.padding = 1,
+                    min.segment.length	=0, 
+                    color = "black",
+                    force = 10) +
+  xlab("Closeness Centrality") +
+  ylab("Eigenvector Centrality") +
+  ggtitle("Centrality Measures for Influential Nodes")
+
+#union results
+intersect_results  %>%
+  select(-Node_Name) %>%
+  cor()
+
+```
+
+
+
+## Look at results for Paul Manafort 
+
+We now recreate Figure 6, and consider Paul Manafort's influence under degree, closeness, and eigenvector centrality. 
+
+#### Degree centrality 
+
+```{r pm.degree}
+#get original statistics
+trump_degree <-  unname(degree(trump_igraph))
+
+#Find bootstrap samples that do no not contain Paul Manafort 
+n_pm <- which(V(trump_igraph)$name == "PAUL MANAFORT")
+n_bootstrap = B*U
+
+
+Gamma_pm <- c()
+
+for(i in 1:n_bootstrap){
+  temp_nodes <- unlist(JaB_trump_degree$Bootstrap_Nodes[[i]])
+  
+  #is PM in bootstrap sample i?
+  if(!(n_pm %in% temp_nodes )){ #if no.... 
+    #Get the centrality statistics accounting for multiplicity 
+    #here we consider multiplicity = F, so we only take the unique instances 
+    if(mult){
+      nodes <- temp_nodes
+    }else(
+      nodes <- unique(temp_nodes)
+    )
+    
+    #store them in simulated null distribution
+    Gamma_pm <- c(Gamma_pm, (trump_degree[nodes]))
+  }
+  
+  
+}
+  
+#get gamma_pm
+degree.value <- trump_degree[n_pm] # JaB_trump_degree$Results$Orig_Stat[JaB_trump_degree$Results$Node_Number == n_pm]
+
+  
+#get q^{(pm)}
+degree.cutoff <- quantile(Gamma_pm, quants[2]) # = JaB_trump_degree$Results$Upper[JaB_trump_degree$Results$Node_Number == n_pm] 
+
+  
+#Plot null distribution 
+as.data.frame(Gamma_pm) %>%
+  ggplot() +
+  geom_histogram(aes(x = Gamma_pm, y = ..density..), bins = 50) +
+  geom_vline(xintercept = degree.value , col = "red") +
+  geom_vline(xintercept = degree.cutoff , col = "blue") +
+  theme_minimal() +
+  ggtitle("Simulated Null Distribution for Paul Manafort")+
+  labs(subtitle = "Degree Centrality") +
+  xlab("Degree") +
+  ylab("Density") +
+  xlim(c(0, 50))
+
+
+```
+
+
+#### Closeness Centrality 
+
+```{r pm.close}
+#get original statistics
+trump_closeness <-  unname(closeness(trump_igraph))
+
+#Find bootstrap samples that do no not contain Paul Manafort 
+n_pm <- which(V(trump_igraph)$name == "PAUL MANAFORT")
+n_bootstrap = B*U
+
+Gamma_pm <- c()
+
+for(i in 1:n_bootstrap){
+  temp_nodes <- unlist(JaB_trump_closeness$Bootstrap_Nodes[[i]])
+  
+  #is PM in bootstrap sample i?
+  if(!(n_pm %in% temp_nodes )){ #if no.... 
+    #Get the centrality statistics accounting for multiplicity 
+    #here we consider multiplicity = F, so we only take the unique instances 
+    if(mult){
+      nodes <- temp_nodes
+    }else(
+      nodes <- unique(temp_nodes)
+    )
+    
+    #store them in simulated null distribution
+    Gamma_pm <- c(Gamma_pm, (trump_closeness[nodes]))
+  }
+  
+  
+}
+  
+#get gamma_pm
+closeness.value <- trump_closeness[n_pm] # JaB_trump_closeness$Results$Orig_Stat[JaB_trump_closeness$Results$Node_Number == n_pm]
+
+  
+#get q^{(pm)}
+closeness.cutoff <- quantile(Gamma_pm, quants[2]) # = JaB_trump_closeness$Results$Upper[JaB_trump_closeness$Results$Node_Number == n_pm] 
+
+  
+#Plot null distribution 
+as.data.frame(Gamma_pm) %>%
+  ggplot() +
+  geom_histogram(aes(x = Gamma_pm, y = ..density..), bins = 100) +
+  geom_vline(xintercept = closeness.value , col = "red") +
+  geom_vline(xintercept = closeness.cutoff , col = "blue") +
+  theme_minimal() +
+  ggtitle("Simulated Null Distribution for Paul Manafort")+
+  labs(subtitle = "Closeness Centrality") +
+  xlab("Closeness") +
+  ylab("Density") +
+  xlim(c(0.000075,0.00014))
+
+
+```
+
+#### Eigenvector Centrality 
+
+```{r pm.eigen}
+#get original statistics
+trump_eigen <-  unname(eigen_centrality(trump_igraph)$vector)
+
+#Find bootstrap samples that do no not contain Paul Manafort 
+n_pm <- which(V(trump_igraph)$name == "PAUL MANAFORT")
+n_bootstrap = B*U
+
+Gamma_pm <- c()
+
+for(i in 1:n_bootstrap){
+  temp_nodes <- unlist(JaB_trump_eigen$Bootstrap_Nodes[[i]])
+  
+  #is PM in bootstrap sample i?
+  if(!(n_pm %in% temp_nodes )){ #if no.... 
+    #Get the centrality statistics accounting for multiplicity 
+    #here we consider multiplicity = F, so we only take the unique instances 
+    if(mult){
+      nodes <- temp_nodes
+    }else(
+      nodes <- unique(temp_nodes)
+    )
+    
+    #store them in simulated null distribution
+    Gamma_pm <- c(Gamma_pm, (trump_eigen[nodes]))
+  }
+  
+  
+}
+  
+#get gamma_pm
+eigen.value <- trump_eigen[n_pm] # JaB_trump_eigen$Results$Orig_Stat[JaB_trump_eigen$Results$Node_Number == n_pm]
+
+  
+#get q^{(pm)}
+eigen.cutoff <- quantile(Gamma_pm, quants[2]) # = JaB_trump_eigen$Results$Upper[JaB_trump_eigen$Results$Node_Number == n_pm] 
+
+  
+#Plot null distribution 
+as.data.frame(Gamma_pm) %>%
+  ggplot() +
+  geom_histogram(aes(x = Gamma_pm, y = ..density..), bins = 50) +
+  geom_vline(xintercept = eigen.value , col = "red") +
+  geom_vline(xintercept = eigen.cutoff , col = "blue") +
+  theme_minimal() +
+  ggtitle("Simulated Null Distribution for Paul Manafort")+
+  labs(subtitle = "Eigenvector Centrality")+
+  xlab("Eigenvector Centraltiy") +
+  ylab("Density") +
+  xlim(c(0, 0.08))
+
+
+```
