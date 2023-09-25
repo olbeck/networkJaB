@@ -28,7 +28,7 @@ source("funcs/JaB-functions.R")
 ```
 
 
-## Intro 
+## The Data
 
 We replicate the TrumpWorld results presented in *Jackknife-after-Bootstrap: Detecting Influential Actors in a Network*. 
 
@@ -51,7 +51,7 @@ trump_igraph <- graph_from_edgelist(trump_edgelist, directed = F )
 ```
 
 
-#### LSMI Optimal seed-wave combo
+#### LSMI Optimal seed-wave comboniation
 
 Then calculate the LSMI optimal seed-wave combination under degree centrality. We will use the selected parameters for all three centrality statistics later in the report. 
 
@@ -110,7 +110,7 @@ JaB_trump_degree <- JaB(trump_igraph,
                           print_null_dist)
 endTime <- Sys.time()
 
-time_degree = endTime - startTime #~10 minutes
+time_degree = endTime - startTime #~9 minutes
 
 ```
 
@@ -224,6 +224,7 @@ union_results %>%
   geom_point() +
   theme_minimal() +
   scale_color_viridis(name = "log(Degree Centrality)") +
+  xlim(c(0.0001270,0.00013))+
   ylim(c(0.03, 0.08))+
   geom_label_repel( aes(label = name), 
                     size = 2, 
