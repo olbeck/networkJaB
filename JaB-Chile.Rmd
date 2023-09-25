@@ -1,0 +1,469 @@
+---
+title: "JaB: Detecting Influential Nodes in Chilean Power Grid"
+output: html_notebook
+---
+
+```{r setup, include = F}
+set.seed(12)
+
+## Libraries --------------------------------------------------------
+# Needed for calculations
+library(tidyverse)
+library(igraph)
+library(snowboot)
+
+#Neeed to read data 
+library(readxl)
+
+# Needed for plotting
+library(viridis)
+library(ggrepel)
+library(GGally)
+invisible(lapply(c("ggplot2", "maps", "network", "sna"), base::library, character.only = TRUE))
+
+
+## Functions --------------------------------------------------------
+source("funcs/JaB-functions.R")
+
+
+
+```
+
+
+## The Data
+
+We replicate the Chilean power grid results presented in Olivia Beck's Comprehensive Exam writen component. 
+
+
+
+### Make an igraph object 
+
+```{r}
+### Data
+############################
+Chile_edgelist_orig <- read.csv("data/WithTap_edge.csv")
+Chile_attributes <-  read.csv("data/WithTap_node.csv")
+
+unique(Chile_edgelist_orig$Type) # all undirected 
+
+#make igraph object 
+edgelist <- as.matrix(Chile_edgelist_orig[, 1:2])
+chile_igraph <- graph_from_edgelist(edgelist, directed = FALSE)
+
+#plot it just to look
+latlon <- as.matrix(Chile_attributes[, 5:6])
+plot(chile_igraph, vertex.size = 1, layout = latlon, vertex.label = NA)
+
+
+## Characteristics 
+gorder(chile_igraph) #nodes 
+length(E(chile_igraph)) #edges 
+
+
+### Plot of original centarlity stats
+data.frame(stat = log(igraph::betweenness(chile_igraph)+1)) %>%
+  ggplot(aes(x = stat, y = ..density..)) + 
+  geom_histogram(fill = "gray", bins = 19) +
+  geom_density(adjust = 0.30) +
+  theme_minimal()+
+  xlab("")
+
+
+```
+
+### Running the Simulation 
+
+We ran the following simulation in ROAR, Penn State's high-performance computing cluster. The results are saved the in the data/Chile-sim-results folder of this repository. 
+
+```{}
+### Options -------------------------------------------------
+B.opts <- 1000
+U.opts <- 100
+s.opts <- c(1,2)
+w.opts <- c(1,2,3)
+q.opts <- c(0.9, 0.95, 0.99)
+mult.opts <- c(TRUE, FALSE)
+stat.opts <- c("betweenness", "eigen")
+
+opts <- expand.grid(B.opts, U.opts, s.opts, w.opts, q.opts, mult.opts, stat.opts)
+colnames(opts) <- c("B", "U", "s", "w", "q", "mult", "stat")
+
+#save(opts, file = "rao-poster/sim-results/opts.Rdata")
+
+### setting up the experiment
+# only need to keep results matrix, dont need to keep null distributsion 
+
+for( i in 1:nrow(opts)){
+  
+  #initalize storage and erase old storage 
+  results.temp <- NA
+  results <- NA
+  
+  #run algorithm with results
+  results.temp <- null_dist_algorithm2(
+    chile_igraph,  
+    B=opts$B[i] , 
+    U=opts$U[i],
+    boot_type = "snowboot", 
+    num_seed=opts$s[i], 
+    num_wave=opts$w[i], 
+    centrality_stat = opts$stat[i], 
+    quants = c(0, opts$q[i]),
+    mult = TRUE)
+  
+  #save 
+  results <- results.temp$Results
+  save(results, file = paste0("rao-poster/sim-results/results-opts-", i, ".Rdata"))
+  
+  
+}
+```
+
+
+### Analyzing the Restuls 
+
+
+```{r}
+#save options from simiulation 
+B.opts <- 1000
+U.opts <- 100
+s.opts <- c(1,2)
+w.opts <- c(1,2,3)
+q.opts <- c(0.9, 0.95, 0.99)
+mult.opts <- c(TRUE, FALSE)
+stat.opts <- c("betweenness", "eigen")
+
+opts <- expand.grid(B.opts, U.opts, s.opts, w.opts, q.opts, mult.opts, stat.opts)
+colnames(opts) <- c("B", "U", "s", "w", "q", "mult", "stat")
+
+
+#extract the .Rdata objects saved from the ROAR simulation
+file.names <- list.files("data/Chile-sim-results/", "results*")
+
+load(paste0("data/Chile-sim-results/", file.names[1]))
+keep.results <- data.frame(results, opts = 1)
+
+#get all the nodes  flagged and sort into appropriate list 
+for(i in 2:nrow(opts)){
+  #load in new one
+  load(paste0("data/Chile-sim-results/", file.names[i]))
+  
+  
+  #get the file number #NOT the ordering of opts
+  temp <- strsplit(file.names[i], split ="-")[[1]][3]
+  temp2 <- strsplit(temp, split = "\\.")[[1]][1]
+  
+  #bind to old ones 
+  keep.results <- rbind(keep.results, data.frame(results, opts = temp2 ))
+}
+
+
+keep.results <- as_tibble(keep.results)
+
+```
+
+
+
+```{r}
+### Extract nodes that were flagged under betweenness for any q and how often
+## constants for exploring 
+opts90 <- which(opts$q == 0.90)
+opts95 <- which(opts$q == 0.95)
+opts99 <- which(opts$q == 0.99)
+
+optsb <- which(opts$stat == "betweenness")
+
+## q = 90, betweenness 
+results90b <- keep.results %>% filter(opts %in% opts90) %>% filter(opts %in% optsb)
+
+tab90 <- 
+  results90b %>%
+  filter(Influential == TRUE) %>%
+  select(Node_Number) %>%
+  table()
+
+names(tab90) <- Chile_attributes$Label[as.numeric(names(tab90))]
+tab90
+
+## q = 95, betweenness 
+results95b <- keep.results %>% filter(opts %in% opts95) %>% filter(opts %in% optsb)
+
+tab95 <- results95b %>%
+  filter(Influential == TRUE) %>%
+  select(Node_Number) %>%
+  table() 
+
+names(tab95) <- Chile_attributes$Label[as.numeric(names(tab95))]
+tab95
+
+## q = 99, betweenness 
+results99b <- keep.results %>% filter(opts %in% opts99) %>% filter(opts %in% optsb)
+
+tab99 <- results99b %>%
+  filter(Influential == TRUE) %>%
+  select(Node_Number) %>%
+  table() 
+
+names(tab99) <- Chile_attributes$Label[as.numeric(names(tab99))]
+tab99
+
+```
+
+
+
+
+
+### Ploting the maps 
+
+```{r}
+#make a network object 
+chile.net <- network(Chile_edgelist_orig, directed = F)
+
+# add coordniates to network
+chile.net %v% "lat" <- Chile_attributes[network.vertex.names(chile.net), "Latitude"]
+chile.net %v% "lon" <- Chile_attributes[network.vertex.names(chile.net), "Longitude"]
+
+
+## Base plot with no zooming ------------------------------------------------------
+chile <- 
+  ggplot(map_data("world", region = "Chile"), aes(x = long, y = lat)) +
+    geom_polygon(aes(group = group), color = "grey65",
+                      fill = "grey", linewidth = 0.2)+
+    theme_minimal()
+chile
+
+
+## Add network to plot -------------------------------------------
+node.c <- rep("red", 347)
+node.c[47] <- "blue"
+
+node.s <- rep(0.25, 347)
+node.s[47] <- 4
+
+p_ <- GGally::print_if_interactive
+p_ <- GGally::ggnetworkmap(
+  chile, chile.net, size = node.s, great.circles = FALSE,
+  segment.color = "black", node.color = node.c
+)+ 
+  xlim(c(-76, -66)) +
+  ylim(c(-45, -17.5))
+
+p_
+
+### full map on smaller areas ---------------------------------------------
+
+lat.min.0 <- -45
+lat.max.0 <- -24
+lon.min.0 <- -75
+lon.max.0 <- -68
+
+chile.zoom0.data <- map_data("world", region = "Chile") %>%
+  dplyr::filter(lat < lat.max.0 & lat >lat.min.0 ,
+                long < lon.max.0 & long > lon.min.0)
+
+chile.zoom1 <- 
+  ggplot(chile.zoom0.data, aes(x = long, y = lat)) +
+  geom_polygon(aes(group = group), color = "grey65",
+               fill = "grey", linewidth = 0.2)+
+  theme_minimal()
+chile.zoom1
+
+## Add network to plot 
+keep.nodes <- Chile_attributes %>%
+  dplyr::filter(Latitude < lat.max.0 & Latitude > lat.min.0, 
+                Longitude < lon.max.0 & Longitude > lon.min.0)
+
+keep.rows <- Chile_edgelist_orig$Source %in% keep.nodes$Id & Chile_edgelist_orig$Target %in% keep.nodes$Id
+
+keep.edges <- Chile_edgelist_orig[keep.rows, ]
+
+chile.zoom0.net <- network(keep.edges, directed = F)
+
+chile.zoom0.net %v% "lat" <- Chile_attributes[network.vertex.names(chile.zoom0.net), "Latitude"]
+chile.zoom0.net %v% "lon" <- Chile_attributes[network.vertex.names(chile.zoom0.net), "Longitude"]
+
+color.vec0 <- rep("#4e51bf", length(network.vertex.names(chile.zoom0.net)))
+
+
+p_0 <- GGally::print_if_interactive
+p_0 <- GGally::ggnetworkmap(
+  chile.zoom1, chile.zoom0.net, size = 0.5, great.circles = FALSE,
+  segment.color = "black", node.fill = color.vec0, node.color = color.vec0
+)
+
+#color data 
+dat.extra <- data.frame(Id = c(105, 108, 264, 178, 130),
+                        lat = NA,
+                        long = NA)
+for(i in 1:5){
+  dat.extra$lat[i] <- Chile_attributes$Latitude[Chile_attributes$Id == dat.extra$Id[i]]
+  dat.extra$long[i] <- Chile_attributes$Longitude[Chile_attributes$Id == dat.extra$Id[i]]
+}
+
+#plot
+
+p_0+ 
+  xlim(c(lon.min.0, lon.max.0)) +
+  ylim(c(lat.min.0, lat.max.0)) +
+  geom_point(data = dat.extra, color = c("#c20320"), shape = 15)
+
+
+### Zoomed in map on Cluster 1 (northern cluster) --------------------------------------------------------------
+
+lat.min.1 <- -35.0
+lat.max.1 <- -32.5
+lon.min.1 <- -72.25
+lon.max.1 <- -70
+
+chile.zoom1.data <- map_data("world", region = "Chile") %>%
+  dplyr::filter(lat < lat.max.1 & lat >lat.min.1 ,
+                long < lon.max.1 & long > lon.min.1)
+
+chile.zoom1 <- 
+  ggplot(chile.zoom1.data, aes(x = long, y = lat)) +
+  geom_polygon(aes(group = group), color = "grey65",
+               fill = "grey", linewidth = 0.2)+
+theme_minimal()
+chile.zoom1
+
+## Add network to plot 
+
+
+keep.nodes <- Chile_attributes %>%
+  dplyr::filter(Latitude < lat.max.1 & Latitude > lat.min.1, 
+                Longitude < lon.max.1 & Longitude > lon.min.1)
+
+keep.rows <- Chile_edgelist_orig$Source %in% keep.nodes$Id & Chile_edgelist_orig$Target %in% keep.nodes$Id
+
+keep.edges <- Chile_edgelist_orig[keep.rows, ]
+
+chile.zoom1.net <- network(keep.edges, directed = F)
+
+chile.zoom1.net %v% "lat" <- Chile_attributes[network.vertex.names(chile.zoom1.net), "Latitude"]
+chile.zoom1.net %v% "lon" <- Chile_attributes[network.vertex.names(chile.zoom1.net), "Longitude"]
+
+
+
+p_1 <- GGally::print_if_interactive
+p_1 <- ggnetworkmap(
+  chile.zoom1, chile.zoom1.net, size = 3, great.circles = FALSE,
+  segment.color = "black", node.color = "#4e51bf"
+)
+
+#color data 
+dat.extra0 <- data.frame(Id = c(105, 130),
+                        lat = NA,
+                        long = NA)
+for(i in 1:2){
+  dat.extra0$lat[i] <- Chile_attributes$Latitude[Chile_attributes$Id == dat.extra0$Id[i]]
+  dat.extra0$long[i] <- Chile_attributes$Longitude[Chile_attributes$Id == dat.extra0$Id[i]]
+}
+
+#plot
+p_1+ 
+  xlim(c(lon.min.1, lon.max.1)) +
+  ylim(c(lat.min.1, lat.max.1)) +
+  geom_point(data = dat.extra, shape = 15, color = "#c20320", size = 6)
+
+
+### Zoomed in map on Cluster 2 (southern cluster) --------------------------------------------------------------
+
+lat.min.2 <- -38.25
+lat.max.2 <- -36.5
+lon.min.2 <- -74
+lon.max.2 <- -70.5
+
+chile.zoom2.data <- map_data("world", region = "Chile") %>%
+  dplyr::filter(lat < lat.max.2 & lat >lat.min.2 ,
+                long < lon.max.2 & long > lon.min.2)
+
+chile.zoom2 <- 
+  ggplot(chile.zoom2.data, aes(x = long, y = lat)) +
+  geom_polygon(aes(group = group), color = "grey65",
+               fill = "grey", linewidth = 0.2)+
+  theme_minimal()
+chile.zoom2
+
+## Add network to plot
+
+
+keep.nodes <- Chile_attributes %>%
+  dplyr::filter(Latitude < lat.max.2 & Latitude > lat.min.2, 
+                Longitude < lon.max.2 & Longitude > lon.min.2)
+
+keep.rows <- Chile_edgelist_orig$Source %in% keep.nodes$Id & Chile_edgelist_orig$Target %in% keep.nodes$Id
+
+keep.edges <- Chile_edgelist_orig[keep.rows, ]
+
+chile.zoom2.net <- network(keep.edges, directed = F)
+
+chile.zoom2.net %v% "lat" <- Chile_attributes[network.vertex.names(chile.zoom2.net), "Latitude"]
+chile.zoom2.net %v% "lon" <- Chile_attributes[network.vertex.names(chile.zoom2.net), "Longitude"]
+
+
+
+p_2 <- GGally::print_if_interactive
+p_2 <- ggnetworkmap(
+  chile.zoom2, chile.zoom2.net, size = 3, great.circles = FALSE,
+  segment.color = "black", node.color = "#4e51bf"
+)
+
+
+#plot
+p_2+ 
+  xlim(c(lon.min.2, lon.max.2)) +
+  ylim(c(lat.min.2, lat.max.2)) +
+  geom_point(data = dat.extra, shape = 15, color = "#c20320", size = 6)
+
+### Zoomed in map on Cluster 3 (middle cluster) --------------------------------------------------------------
+
+lat.min.3 <- -36.5
+lat.max.3 <- -34.6
+lon.min.3 <- -73
+lon.max.3 <- -70
+
+chile.zoom3.data <- map_data("world", region = "Chile") %>%
+  dplyr::filter(lat < lat.max.3 & lat >lat.min.3 ,
+                long < lon.max.3 & long > lon.min.3)
+
+chile.zoom3 <- 
+  ggplot(chile.zoom3.data, aes(x = long, y = lat)) +
+  geom_polygon(aes(group = group), color = "grey65",
+               fill = "grey", linewidth = 0.2)+
+  theme_minimal()
+chile.zoom3
+
+## Add network to plot
+
+
+keep.nodes <- Chile_attributes %>%
+  dplyr::filter(Latitude < lat.max.3 & Latitude > lat.min.3, 
+                Longitude < lon.max.3 & Longitude > lon.min.3)
+
+keep.rows <- Chile_edgelist_orig$Source %in% keep.nodes$Id & Chile_edgelist_orig$Target %in% keep.nodes$Id
+
+keep.edges <- Chile_edgelist_orig[keep.rows, ]
+
+chile.zoom3.net <- network(keep.edges, directed = F)
+
+chile.zoom3.net %v% "lat" <- Chile_attributes[network.vertex.names(chile.zoom3.net), "Latitude"]
+chile.zoom3.net %v% "lon" <- Chile_attributes[network.vertex.names(chile.zoom3.net), "Longitude"]
+
+
+
+p_3 <- GGally::print_if_interactive
+p_3 <- ggnetworkmap(
+  chile.zoom3, chile.zoom3.net, size = 3, great.circles = FALSE,
+  segment.color = "black", node.color = "#4e51bf"
+)
+
+
+#plot
+p_3+ 
+  xlim(c(lon.min.3, lon.max.3)) +
+  ylim(c(lat.min.3, lat.max.3)) +
+  geom_point(data = dat.extra, shape = 15, color = "#c20320", size = 6)
+
+
+
+```

@@ -1,0 +1,348 @@
+Id,Label,Owner,Role,Longitude,Latitude,ref
+1,San Javier,Transnet,Substation,-71.71172055,-35.5887402617,original
+2,Constitucion,Transnet,Substation,-72.4027163506,-35.3637005831,original
+3,Paposo,Transelec,Switch,-69.9436702808,-25.7306077564,converted
+4,Tap Off Taltal,Electrica Panguipulli,Switch,-69.9436702808,-25.7306077564,converted
+5,Eolica Taltal,P.E Taltal,Plant,-69.8484638639,-25.059477202,original
+6,Diego de Almagro,Transelec,Substation,-70.0388766977,-26.3979710839,original
+7,Diego de Almagro,Endesa,Plant,-70.0386764329,-26.3984370693,original
+8,El Salvador,SWC,Plant,-70.0395552839,-26.392251609,original
+9,La Union,STS,Tap-ed,-73.064835422,-40.2916498692,original
+10,Los Lagos,STS,Tap-ed,-72.8043499857,-39.864945377,original
+11,San Fernando,Transnet,Substation,-70.9833991429,-34.5979272566,original
+12,Portezuelo,Transnet,Tap-ed,-71.6127844771,-34.3477966743,original
+13,Taltal,Elecda,Substation,-70.473818127,-25.4130051187,original
+14,Emelda,Emelda,Plant,-70.0222496889,-26.3803179925,original
+15,Diego de Almagro,Almeyda,Plant,-70.0194165856,-26.3795888296,original
+16,Barro Blanco,STS,Tap-ed,-73.0856723004,-40.5769294964,original
+17,Melipulli,STS,Tap-ed,-72.950775208,-41.4469604193,original
+18,Tap Quilmo,Unknown,Tap node,-72.2069276775,-36.8583757585,converted
+19,Lajuelas,Unknown,Switch,-72.2069276775,-36.8583757585,converted
+20,Choapa,Transnet,Tap-ed,-71.4773651352,-31.9372459507,original
+21,Quillota,Transelec,Substation,-71.251379066,-32.9529453461,original
+22,Tap Chañares,Unknown,Switch,-70.0388766977,-26.3979710839,converted
+23,Cardones,Transelec,Substation,-70.3869767493,-27.4889219288,original
+24,Llano de Llampos,Amanecer Solar,Plant,-70.1711434012,-27.1174606208,original
+25,Punta Colorada,Transelec,Substation,-71.047665658,-29.3669424795,original
+26,Punta Colorada,Barrick Generacion,Plant,-71.0585306628,-29.3662216022,original
+27,Llanta,Codelco Chile - División Salvador,Tap-ed,-69.7994757727,-26.3291061772,original
+28,Tap San Gregorio,Unknown,Tap node,-71.8191533585,-36.2787627389,original
+29,Monterrico,Transnet,Tap-ed,-72.0617740084,-36.6120982449,original
+30,Tap San Felipe 110kV,Chilquinta,Tap node,-70.715944902,-32.7635473045,original
+31,Tap San Felipe 44kV,Chilquinta,Tap node,-70.7164455759,-32.7631491095,original
+32,Tap Llanta,Unknown,Switch,-69.8114504886,-26.3361847602,converted
+33,El Salvador,Codelco Chile - División Salvador,Tap-ed,-69.5959989955,-26.2814473634,original
+34,Malloa Nueva,Transnet,Tap-ed,-70.9450889867,-34.4639539267,converted
+35,La Ronda,Transnet,Tap-ed,-70.9593954049,-34.5583547894,original
+36,San Lorenzo,Enlasa,Plant,-70.0379576216,-26.4003538809,original
+37,Carrera Pinto,Transelec,Switch,-70.0750487253,-26.8269067181,converted
+38,Alto Melipilla,Chilquinta,Substation,-71.2460728297,-33.6875392503,original
+39,Bajo Melipilla,Transnet,Tap-ed,-71.2033115515,-33.6976152795,original
+40,Las Arañas,Transnet,Tap-ed,-71.4133888115,-33.9082265341,original
+41,Reguladora Rapel,Transnet,Tap-ed,-71.5840059334,-34.039342191,original
+42,San Andres,San Andres,Plant,-70.1112207529,-27.2542245193,original
+43,Las Palmas,Transelec,Substation,-71.5897489479,-31.2880478927,original
+44,Totoral 1,Norvind,Plant,-71.6110342975,-31.3255998584,original
+45,Lautaro,Transnet,Substation,-72.4612955172,-38.5413615936,original
+46,Angol,Transnet,Tap-ed,-72.657591055,-37.8231718293,original
+47,Cardones,Central Cardones,Plant,-70.386436207,-27.487597634,original
+48,Los Maquis,Transnet,Tap-ed,-71.6602315786,-35.1649669039,converted
+49,Licanten,Arauco Generacion,Plant,-72.0199378079,-34.9881912236,original
+50,Tap Vizcachas,Unknown,Tap node,-70.5082765479,-33.5746390051,original
+51,Puente Alto,EEPA,Substation,-70.5573221445,-33.6080414261,original
+52,Tap Maule,Unknown,Tap node,-71.5305052519,-35.5003464909,converted
+53,Linares,Transnet,Substation,-71.6282960961,-35.845150581,original
+54,Maitencillo,Transelec,Substation,-70.9244721687,-28.5347206226,original
+55,Jorquera,Mineral Lumina Copper,Substation,-69.9766992985,-28.0438163986,original
+56,Tap El Eden,Transelec,Switch,-70.7847785818,-28.6054763171,converted
+57,Rio Huasco,Hidroelectrica Rio Huasco,Plant,-70.6450849949,-28.6761843931,original
+58,Cenizas,Electrica Cenizas,Plant,-70.3897434007,-27.4809482699,original
+59,SDGx01,SDGx01,Plant,-71.0924813827,-30.2271628532,original
+60,El Peñon,Transnet,Substation,-71.2292507045,-30.1441103674,original
+61,Illapel,Transnet,Substation,-71.1471742601,-31.6244322923,original
+62,Punitaqui,Transnet,Substation,-71.2433728583,-30.8561956588,original
+63,Esperanza,Colbun,Tap-ed,-71.0101419189,-32.8425099479,original
+64,Pachacama,Chilquinta,Switch,-71.074272724,-32.8660972477,converted
+65,Tap Achupallas,Chilquinta,Switch,-71.5159981116,-33.0332186789,original
+66,Concon,Chilquinta,Tap-ed,-71.5162879001,-32.9344326135,original
+67,Los Almendros,Chilectra,Substation,-70.5082285636,-33.4277881555,original
+68,Tap Apoquindo,Unknown,Tap node,-70.5644116329,-33.4095963509,original
+69,El Salto,Chilectra,Substation,-70.6286241716,-33.3591688306,original
+70,Tap El Manzano,Chilectra,Switch,-70.7440720243,-33.2777547405,converted
+71,Tap Lo Aguirre,Unknown,Tap node,-70.8990916413,-33.4417940901,converted
+72,Cerro Navia,Chilectra,Tap-ed,-70.7294587882,-33.4209321676,original
+73,Tap Maipu,Unknown,Tap node,-70.7307522907,-33.4879946098,converted
+74,Lircay,Hidromaule,Plant,-71.2613552647,-35.5372508006,original
+75,Providencia,Hidroprovidencia,Plant,-71.2728826323,-35.4696876898,original
+76,Tap Lo Espejo,Unknown,Tap node,-70.7208125175,-33.5292384812,converted
+77,Tap Lo Espejo (FFCC),Unknown,Tap node,-70.7116133225,-33.530679374,converted
+78,Renca,Chilectra,Substation,-70.689381179,-33.4171836332,original
+79,EST 17,Unknown,Tap node,-72.3753586917,-37.490094475,original
+80,Guacolda,Guacolda,Plant,-71.2572509162,-28.4673299744,original
+81,Florida,Chilectra,Switch,-70.5458028471,-33.5479564528,converted
+82,Ochagavia,Chilectra,Substation,-70.667516184,-33.4794970934,original
+83,Huasco,Transelec,Substation,-71.2525686446,-28.4704376246,original
+84,Huasco,Transelec,Plant,-71.2525818536,-28.4707403626,original
+85,Tap Buin,Unknown,Tap node,-70.6916669196,-33.7102554036,original
+86,Tap Santa Rosa Sur,Unknown,Tap node,-70.6117928198,-33.613388767,converted
+87,Lo Espejo,Chilectra,Switch,-70.7065339865,-33.6202192359,converted
+88,Buin,Chilectra,Substation,-70.6922554555,-33.7111040331,original
+89,Tap Algarrobo,Chilquinta,Tap-ed,-71.5934869567,-33.3680836277,original
+90,Agua Santa,Chilquinta,Substation,-71.5422416106,-33.0765697685,original
+91,Tap El Manzano,Unknown,Switch,-70.7920409361,-33.1595892577,original
+92,San Antonio,Chilquinta,Tap-ed,-71.6034829964,-33.6015149162,original
+93,Rancagua,Transelec,Substation,-70.7262144557,-34.1665002987,original
+94,Punta de Cortes,Transnet,Substation,-70.8399235079,-34.1841935543,original
+95,Tap Los Lirios,Transnet,Switch,-70.7631194118,-34.2355887575,original
+96,Pelequen,Transnet,Tap-ed,-70.891044166,-34.472500167,original
+97,Tap Punta de Cortes,Transnet,Switch,-70.8403726655,-34.1845651126,converted
+98,Tap Malloa Nueva,Unknown,Tap node,-70.8334160978,-34.4671308261,converted
+99,Teno,Transnet,Substation,-71.1416671792,-34.8685636567,original
+100,Pan de Azucar,Transelec,Substation,-71.2796731929,-29.9771338864,original
+101,Talca,Transnet,Substation,-71.6399736674,-35.4374904611,original
+102,San Ignacio,Colbun,Plant,-71.5413000695,-35.6146176896,original
+103,Itahue,Transelec,Substation,-71.3674326153,-35.1396350165,original
+104,Cipreses,Endesa,Plant,-70.8083703952,-35.7872181968,original
+105,Ancoa,Transelec,Substation,-71.378769157,-35.6840939794,original
+106,Tap Longavi,Transnet,Switch,-71.6960803588,-35.9628215618,original
+107,Parral,Transnet,Substation,-71.8052362446,-36.133366638,original
+108,Charrua,Transelec,Substation,-72.3208141857,-37.0907869384,original
+109,Penco,Transnet,Tap-ed,-72.9905517812,-36.7437468281,original
+110,Lirquen Indura,Indura,Substation,-72.9739241029,-36.7186972689,original
+111,Cerro Chepe,Unknown,Switch,-73.0733229169,-36.8238772452,original
+112,Tap Loma Colorada,Unknown,Tap node,-73.1315022866,-36.9337511308,converted
+113,Palmucho,Endesa,Plant,-71.47134997,-38.0452081119,original
+114,Tap Zona de Caida,Unknown,Tap node,-71.5133967146,-37.9992685721,original
+115,Tap Maria Dolores,Unknown,Switch,-72.5161015304,-37.1902226484,converted
+116,Tap Celulosa Santa Fe,Unknown,Tap node,-72.5507190158,-37.4991970688,converted
+117,Los Angeles,Transnet,Tap-ed,-72.3682522268,-37.4810250968,original
+118,Tap Renaico,Transnet,Switch,-72.5802802428,-37.6756529995,original
+119,Pullinque,Transnet,Plant,-72.2174508857,-39.5956718658,original
+120,Padre Las Casas,Transnet,Tap-ed,-72.6079614716,-38.7743060697,original
+121,San Pedro,AES Gener,Tap-ed,-71.2645201019,-32.9361370473,original
+122,Ovalle,Transnet,Substation,-71.1873865321,-30.5967193373,original
+123,Tap Talinay Oriente,Unknown,Tap node,-71.4869606457,-30.714403359,converted
+124,Talinay Oriente,Parque Eolico Talinay,Plant,-71.5914597964,-30.8733907378,original
+125,Tap Monte Redondo,Unknown,Tap node,-71.658275219,-31.0777116875,converted
+126,Monte Redondo,EMR,Plant,-71.6578260613,-31.0773269976,original
+127,Eolica Punta Palmeras,Punta Palmeras,Plant,-71.6404194613,-31.2344808794,original
+128,Canela I,Canela,Plant,-71.6023399986,-31.2883407886,original
+129,Elevadora Canela II,Canela,Plant,-71.6011438932,-31.3135987789,corrected
+130,Los Vilos,Transelec,Substation,-71.4776754583,-31.9387430035,original
+131,Tap Monte Patria,Unknown,Tap node,-70.9559081401,-30.6909596823,converted
+132,Monte Patria,Transnet,Substation,-70.9554589825,-30.6905734362,original
+133,Tap Punitaqui,Unknown,Tap node,-71.2438220159,-30.8565812407,converted
+134,San Gregorio,Tecnored,Plant,-71.81877225,-36.2788154389,original
+135,Los Espinos,Potencia,Plant,-71.4503012009,-31.8830065257,original
+136,Nogales,Transelec,Switch,-71.2680435371,-32.7107773698,converted
+137,Nueva Ventanas,Electrica Ventanas,Tap-ed,-71.4835997471,-32.7501877093,converted
+138,Nueva Ventanas,AES Gener,Plant,-71.4831505895,-32.7498099502,original
+139,Campiche,AES Gener,Plant,-71.4832965102,-32.7482937004,original
+140,Ventanas,AES Gener,Plant,-71.4832894628,-32.7515412045,original
+141,Quintero,Chilquinta,Substation,-71.4873000294,-32.7880831969,original
+142,Torquemada,AES Gener,Substation,-71.4724050415,-32.9345690277,original
+143,Quintero,Endesa,Plant,-71.4855418027,-32.7870742278,original
+144,San Luis,Transquillota,Switch,-71.3392061827,-32.9463652807,converted
+145,San Isidro,Celta,Plant,-71.338757025,-32.9459883558,original
+146,Nehuenco,Colbun,Plant,-71.3231015536,-32.9366244596,original
+147,Polpaico,Transelec,Substation,-70.8595198771,-33.1962646532,original
+148,Las Vegas,AES Gener,Substation,-71.0109403199,-32.8428578483,original
+149,San Vicente,Transelec,Substation,-73.1248695749,-36.7472710533,original
+150,Alonso de Ribera,Transnet,Tap-ed,-73.0337001872,-36.8053093299,original
+151,Las Vegas,Chilquinta,Plant,-71.0114885552,-32.8428472306,original
+152,Fundicion Chagres,Anglo American Sur,Tap-ed,-70.9565823556,-32.8064679727,original
+153,Tap Fundicion Chagres,Anglo American Sur,Tap node,-70.8942230589,-32.8041809347,converted
+154,Tap San Rafael 110kV,Chilquinta,Tap node,-70.6046251573,-32.8101992165,original
+155,Totoralillo,Colbun,Tap-ed,-70.5056865025,-32.8539276889,original
+156,Chacabuquito,Colbun,Plant,-70.5061384278,-32.8534803032,original
+157,Tap Los Maquis,Unknown,Tap node,-70.4105009354,-32.8656349714,original
+158,Aconcagua,Colbun,Tap-ed,-70.3580660138,-32.9418518337,converted
+159,Los Quilos,Colbun,Plant,-70.4079816058,-32.8664931449,original
+160,Los Maquis,Colbun,Tap-ed,-70.4105009354,-32.8656349714,original
+161,Arauco,Celulosa Arauco,Plant,-73.222178696,-37.2091968159,original
+162,Horcones,Transnet,Substation,-73.2162971114,-37.2124518041,original
+163,Eólica Lebu,Parque Eólico Lebu,Plant,-73.6491305965,-37.686072186,original
+164,Chagres,Chilquinta,Tap-ed,-70.9541961599,-32.8045809767,original
+165,Los Vientos,AES Gener,Plant,-71.0128466255,-32.8438607769,original
+166,Hornitos,Rio Tranquilo,Plant,-70.2633388463,-32.9005715538,original
+167,SAG,Codelco Chile,Substation,-70.2557090892,-33.0927816976,original
+168,Tap El Llano,Colbun,Switch,-70.5637409706,-33.0942672557,original
+169,Miraflores,Chilquinta,Substation,-71.5255100542,-33.0344953167,original
+170,Placilla,Chilquinta,Plant,-71.5590607839,-33.1084615129,original
+171,Concon (PMG),Tecnored,Plant,-71.4742286582,-32.9331165216,original
+172,Colmito,Termoelectrica Colmito,Plant,-71.4740239248,-32.9303690357,original
+173,Tap La Ermita,Unknown,Tap node,-70.4075802543,-33.3742818263,original
+174,Alfalfal,AES Gener,Plant,-70.1926517347,-33.501244004,original
+175,Maitenes,AES Gener,Plant,-70.2616705541,-33.5306985354,original
+176,Alfalfal,AES Gener,Substation,-70.1925190166,-33.5014100565,original
+177,La Laja,AES Gener,Switch,-70.4197030649,-33.581176077,original
+178,Alto Jahuel,Transelec,Substation,-70.6920464333,-33.7139475885,original
+179,Apoquindo,Chilectra,Substation,-70.5645884959,-33.4098646736,original
+180,Tap Lampa,Unknown,Tap node,-70.7580130519,-33.3189952992,original
+181,Lampa,Chilectra,Substation,-70.7574401064,-33.3188140251,original
+182,Cerro Navia,Transelec,Substation,-70.729953124,-33.4224556893,original
+183,Seccionadora lo Aguirre,Transelec,Tap-ed,-70.8793635447,-33.5062037218,converted
+184,Tap Alto Melipilla,Unknown,Tap node,-71.2359347443,-33.6911060067,original
+185,Rapel,Transelec,Substation,-71.5849732939,-34.0381144827,original
+186,Chena,Transelec,Substation,-70.7256986048,-33.5264058539,original
+187,Lo Aquirre,Chilectra,Substation,-70.8986424836,-33.4414192915,original
+188,Lo Prado,Chilectra,Tap-ed,-70.9097597231,-33.4567022971,original
+189,Maipu,Chilectra,Substation,-70.7327863714,-33.5152147285,original
+190,Chena,Chilectra,Tap-ed,-70.7300117126,-33.5277975644,original
+191,Lo Espejo (FFCC),EFE,Substation,-70.7111641648,-33.5303049598,original
+192,Nueva Renca,AES Gener,Plant,-70.6869681356,-33.4183577352,original
+193,Renca,AES Gener,Plant,-70.6885703425,-33.417289457,original
+194,EST 1,Unknown,Tap node,-71.2144405271,-34.7819758347,converted
+195,San Cristobal,Chilectra,Substation,-70.6393387182,-33.4272966327,original
+196,Tap Batuco,Unknown,Tap node,-70.7308535302,-33.2676567852,original
+197,Batuco,Chilectra,Substation,-70.7308524627,-33.2676026901,original
+198,Punta Peuco,AES Gener,Tap-ed,-70.8259850822,-33.1189320451,original
+199,Polpaico,Chilectra,Substation,-70.8265884991,-33.1187843163,original
+200,Punta Peuco,Cemento Polpaico,Substation,-70.8271384376,-33.1189833127,original
+201,Florida (SCM),Puntilla,Plant,-70.5453536894,-33.5475821135,original
+202,El Rincon,Puntilla,Plant,-70.5430030463,-33.5480352958,original
+203,Puntilla,Puntilla,Plant,-70.5351858217,-33.6187184396,original
+204,Queltehues,AES Gener,Plant,-70.2193299746,-33.8127964452,original
+205,Volcan,AES Gener,Plant,-70.214827632,-33.8206461317,original
+206,Molinos,Codelco Chile,Substation,-70.2557155003,-33.0932326011,original
+207,Santa Rosa Sur,Chilectra,Substation,-70.5979086927,-33.5818693577,original
+208,Carena,EE Inductrial,Plant,-70.9528027015,-33.5285691478,original
+209,Pirque,Transnet,Substation,-70.5570750745,-33.6299639432,corrected
+210,Maipo,Colbun,Tap-ed,-70.6915959932,-33.7159917085,original
+211,Candelaria,Colbun,Switch,-70.6136283831,-34.0346308654,corrected
+212,Paine,Transnet,Substation,-70.7511324335,-33.8244654177,original
+213,EST 29,Unknown,Tap node,-70.7284269797,-33.8010375038,converted
+214,Tap Hospital,Unknown,Tap node,-70.7421020724,-33.8646284002,original
+215,Quelentaro,Transnet,Tap-ed,-71.5863972926,-34.0404151958,original
+216,Rapel,Endesa,Plant,-71.5902478436,-34.0409484792,original
+217,La Esperanza,Transnet,Substation,-71.5406029,-34.311577,corrected
+218,Tap Paine,Unknown,Tap node,-70.7548318415,-33.832345647,original
+219,Tap Tuniche,Unknown,Tap node,-70.753366349,-33.9745881429,converted
+220,Sauzal,Transelec,Substation,-70.6325687459,-34.2517133945,original
+221,Tuniche,Transnet,Substation,-70.7540389083,-34.1198926455,original
+222,San Francisco de Mostazal,Transnet,Substation,-70.7020458701,-33.9817554452,original
+223,Tap Graneros,Unknown,Tap node,-70.7084673435,-34.0610634485,original
+224,Graneros,Transnet,Substation,-70.7100623297,-34.0612266583,original
+225,Tap Graneros Indura,Unknown,Tap node,-70.7114891576,-34.0643320871,converted
+226,Graneros Indura,Indura,Substation,-70.71104,-34.06396,corrected
+227,Sauzal,Endesa,Plant,-70.5474037887,-34.2366633953,original
+228,Interconexion,HCSA PHCH,Tap-ed,-70.5261547165,-34.2052935803,converted
+229,Chacayes,Pacific Hydro Chacayes,Plant,-70.4522666792,-34.2755581762,original
+230,Coya,HCSA,Plant,-70.5257055589,-34.2049221133,original
+231,T7,HCSA PHCH,Switch,-70.5261547165,-34.2052935803,converted
+232,Minero,Codelco Chile,Tap-ed,-70.4736873135,-34.0898451018,original
+233,Candelaria,Colbun,Plant,-70.6138087859,-34.0338620077,original
+234,Colbun,Colbun,Plant,-71.3698510555,-35.6853402114,original
+235,Tap Sauzal,Unknown,Tap node,-70.6777149982,-34.220251407,converted
+236,Minera Valle Central,Minera Valle Central,Plant,-70.6743617929,-34.2425145745,original
+237,Tap La Paloma,Unknown,Tap node,-70.9525805933,-34.5577083621,original
+238,Malloa,Transnet,Substation,-70.9595556558,-34.4606904607,original
+239,Quinta de Tilcoco,Transnet,Substation,-70.9703607202,-34.364156774,original
+240,Tinguiririca,Transelec,Switch,-70.7147866411,-34.7519092204,converted
+241,La Higuera,Pacific Hydro,Plant,-70.7143374834,-34.7515401791,original
+242,Teno Empalme,Transnet,Tap-ed,-71.1661694648,-34.8539007965,original
+243,Teno,Enlasa,Plant,-71.1419324598,-34.8685560069,original
+244,Panguilemo,Transnet,Tap-ed,-71.5933243125,-35.3666281102,original
+245,San Miguel,Transnet,Substation,-71.6166847696,-35.439792567,original
+246,Maule,Transnet,Substation,-71.5300560943,-35.4999808254,original
+247,Curillinque,Pehuenche,Plant,-70.9410821351,-35.8051125751,original
+248,Isla,Endesa,Plant,-70.835695195,-35.8104223778,original
+249,Tap Pehuenche,Unknown,Tap node,-71.2673411085,-35.7091095538,converted
+250,Pehuenche,Transelec,Switch,-71.1559130599,-35.7341172797,converted
+251,Canal Melado,Transelec,Tap-ed,-71.104468601,-35.7859502567,converted
+252,Pehuenche,Pehuenche,Plant,-71.1554639023,-35.7337526815,original
+253,Loma Alta,Pehuenche,Plant,-70.9821703252,-35.7908645835,original
+254,Los Hierros,Aguas Del Melado,Plant,-71.0638943692,-35.8578068658,original
+255,Machicura,Colbun,Plant,-71.3979441371,-35.7324308035,original
+256,Chiburgo,Colbun,Plant,-71.3550619097,-35.661455093,original
+257,San Clemente,Colbun,Plant,-71.3556441822,-35.598156176,original
+258,Constitucion 1 y Maule,Elektragen,Plant,-72.4068630554,-35.3603946551,original
+259,Viñales,Paneles Arauco,Plant,-72.4107645058,-35.3710923295,original
+260,Coronel,Transnet,Substation,-73.152078862,-37.0099081927,original
+261,Tap el Nevado,Unknown,Tap node,-72.0810777021,-36.6060766697,original
+262,Santa Elvira,Transnet,Substation,-72.0988309032,-36.5962923068,original
+263,Nueva Aldea,Arauco Generacion,Plant,-72.473097438,-36.6597129141,original
+264,Chillan,Transnet,Substation,-72.0930411693,-36.6252556657,original
+265,Cholguan,Paneles Arauco,Plant,-72.0674192525,-37.1648793161,original
+266,Concepcion,Transelec,Tap-ed,-72.8674839322,-36.8469125672,converted
+267,Hualpen,Transelec,Substation,-73.1218306456,-36.7883906127,original
+268,Petropower,Petropower,Plant,-73.1217079388,-36.7872845042,original
+269,Lagunillas,Transelec,Substation,-73.1355762271,-36.9883240455,original
+270,Tap Ejercito,Unknown,Tap node,-72.9704034246,-36.8353957733,converted
+271,Ejercito,Transnet,Tap-ed,-73.0020518059,-36.8203540301,converted
+272,Escuadron,Transnet,Tap-ed,-73.1691050809,-36.9673433981,original
+273,Coronel,Sagesa,Plant,-73.1685813815,-36.9675605587,original
+274,Tap Polpaico,Unknown,Switch,-73.1711402482,-36.9768783711,original
+275,Bocamina,Endesa,Plant,-73.1673118785,-37.021477934,original
+276,Tap Quinenco,Unknown,Tap node,-73.1516556559,-37.0065712989,converted
+277,Tap FPC,Unknown,Tap node,-73.1455908862,-36.9616610639,converted
+278,Tap Mapal,Masisa,Tap node,-73.1361985594,-36.8725331837,converted
+279,Mapal,Masisa,Substation,-73.1411741462,-36.8674493536,original
+280,Horcones,Arauco Bioenergia,Plant,-73.2167423439,-37.211800927,original
+281,Santa Maria,Colbun,Plant,-73.1300237794,-37.0419972981,original
+282,Santa Lidia,AES Gener,Plant,-72.3164442238,-37.0930229782,original
+283,Los Pinos,Colbun,Plant,-72.3247443837,-37.085435716,original
+284,Cholguan,STS,Substation,-72.071277589,-37.1614420628,original
+285,Pangue,Celta,Plant,-71.6086833375,-37.9098682325,original
+286,Tap Trupan,Transelec,Switch,-71.8519712529,-37.4377953324,converted
+287,Antuco,Endesa,Plant,-71.6264162354,-37.3103219792,original
+288,El Toro,Endesa,Plant,-71.4924130083,-37.2933632021,original
+289,Ralco,Endesa,Plant,-71.5199021008,-37.9969324489,original
+290,Quilleco,Colbun,Plant,-71.9567386365,-37.3359615769,original
+291,Rucue,Colbun,Plant,-71.8657270376,-37.3603337386,original
+292,Mampil,Dei Duqueco,Plant,-71.7098204,-37.5403667572,original
+293,Peuchen,Dei Duqueco,Plant,-71.5964566692,-37.5404478846,original
+294,Tap Duqueco,Transnet,Switch,-72.3226488785,-37.5183536443,original
+295,Mulchen,Conbun,Substation,-72.2546136989,-37.6815381718,original
+296,Tap Off El Rosal,EMR,Tap-ed,-72.3494021888,-37.2484763637,original
+297,Laja 1,EMR,Plant,-72.530612067,-37.2449261885,original
+298,Yungay,Duke Energy,Plant,-72.2933104591,-37.1054882983,original
+299,Abanico,Endesa,Plant,-71.4893944925,-37.3645526252,original
+300,Celulosa Laja,CMPC Celulosa,Plant,-72.711388875,-37.2895275903,original
+301,Renaico,Mainco,Plant,-72.4155448774,-37.8138355616,original
+302,Lautaro,Comasa,Plant,-72.4674285287,-38.5418527419,original
+303,Pillanlelbun,Transnet,Substation,-72.471618765,-38.6365352205,original
+304,Temuco,Transelec,Substation,-72.5579484374,-38.7081581675,original
+305,Celulosa Santa Fe,CMPC Celulosa,Plant,-72.6518888768,-37.5144443176,original
+306,Celulosa Pacifico,CMPC Celulosa,Plant,-72.4841666404,-37.7917109799,original
+307,Angostura,Colbun,Plant,-71.816859452,-37.710261844,original
+308,Cautin,Transelec,Substation,-72.5416722483,-38.7227282058,original
+309,Valdivia,Transelec,Substation,-73.1870007236,-39.799903008,original
+310,Ciruelos,Transelec,Substation,-72.9115592755,-39.5500959614,original
+311,Planta Valdivia,Celulosa Arauco,Plant,-72.9006995977,-39.5635484139,original
+312,Calle Calle,Sagesa,Plant,-73.1890721243,-39.7999211791,original
+313,Antilhue,Colbun,Plant,-73.1851765638,-39.8008711744,original
+314,Osorno,STS,Tap-ed,-73.1137034735,-40.5681582345,original
+315,Pilauco,STS,Tap-ed,-73.0823277809,-40.5743338958,original
+316,Pilmaiquen,Electrica Panguipulli,Plant,-72.649672274,-40.6380952491,original
+317,Rahue,Transelec,Switch,-72.9842271292,-40.6136933656,converted
+318,Pichirrahue,Transrucatayo,Switch,-72.9479660865,-40.6272327445,converted
+319,Rucatayo,Transrucatayo,Plant,-72.7038154419,-40.6191320288,original
+320,Puerto Montt,Transelec,Substation,-72.9530820941,-41.4524387587,original
+321,Antillanca,STS,Tap-ed,-72.7144979184,-40.6178577518,original
+322,Lican,EE Lican,Plant,-72.401399818,-40.6180008868,original
+323,Capullo,Capullo,Plant,-72.3999407496,-40.8191914428,original
+324,Rio Bonito,STS,Tap-ed,-72.4095947453,-40.9093785262,original
+325,Nalcas,Hidronalcas,Plant,-72.3400681442,-40.8951839075,original
+326,Callao,Hidronalcas,Plant,-72.3382021868,-40.8878451543,original
+327,Chuyaca,Sagesa,Plant,-73.088412642,-40.5786454473,original
+328,Chiloe,STS,Substation,-73.7117467669,-42.1434627689,original
+329,Degan,STS,Substation,-73.7126285964,-42.1414746399,original
+330,Degan,Unknown,Plant,-73.713077754,-42.1418076851,converted
+331,Quellón,STS,Plant,-73.6142934474,-43.0913296312,original
+332,Chonchi,STS,Substation,-73.8040191854,-42.6240069158,original
+333,Canutillar,Colbun,Plant,-72.3416577885,-41.5280512093,original
+334,Ancud,STS,Substation,-73.7955423614,-41.8771592029,original
+335,San Andres,H San Andres,Plant,-70.3825410332,-34.7346591851,original
+336,Pid Pid,STS,Substation,-73.7712334578,-42.4115975853,original
+337,Eolica Cuel,Parque Eolico Negrete,Plant,-72.493707999,-37.5107242332,original
+338,Santa Rosa,Transnet,Substation,-71.3120898363,-33.9897436305,original
+339,El Totoral (PMG),Tecnored,Plant,-71.6368780538,-33.4274216112,original
+340,Escuadron,Nueva Energia,Plant,-73.1556055454,-36.9349887421,original
+341,Los Maitenes,Anglo American Sur,Tap-ed,-70.3578780214,-33.3048672161,original
+342,Guayacán,E Coyanco,Plant,-70.3596616977,-33.6026817595,original
+343,Solar Loma Los Colorados,KDM,Plant,-70.804346514,-32.9556867229,original
+344,Los Molles,Endesa,Plant,-70.5875061431,-30.7446622086,original
+345,Mariposas,Hidrolircay,Plant,-71.2641676839,-35.5960523718,original
+346,Trapen,Enlasa,Plant,-73.0768276005,-41.517726814,original
+347,Newen,Gas Sur,Plant,-73.1127298517,-36.7754880657,original
