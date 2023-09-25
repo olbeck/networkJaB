@@ -1,2 +1,2 @@
 # networkJaB
-R code to reproduce network JaB paper 
+R code to reproduce results in Olivia Beck's Comprehensive Exam. 
